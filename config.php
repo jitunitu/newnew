@@ -19,7 +19,7 @@ try {
     $pdo = null;
 
     // Detect if running on Localhost (XAMPP)
-    $is_localhost = ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1');
+    $is_localhost = ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1' || strpos($_SERVER['HTTP_HOST'], '192.168.') === 0);
 
     // Use Cloud MySQL ONLY if NOT on localhost AND credentials exist
     if (!$is_localhost && $db_host !== 'your-cloud-db-host.com' && !empty($db_host)) {
@@ -81,6 +81,7 @@ try {
     )");
 
 } catch(PDOException $e) {
+    ob_clean(); // Clean any previous output
     // Return JSON error for Frontend
     die(json_encode(['success' => false, 'message' => 'Database Error: ' . $e->getMessage()]));
 }
