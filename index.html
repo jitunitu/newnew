@@ -94,7 +94,6 @@
                 data = JSON.parse(text);
             } catch (e) {
                 console.error("Server returned invalid JSON:", text);
-                showError(errorDiv, 'Server Error. See console for details.');
                 return;
             }
 
@@ -140,8 +139,7 @@
                 data = JSON.parse(text);
             } catch (e) {
                 console.error("Server returned invalid JSON:", text);
-                showError(errorDiv, 'Server Error. See console for details.');
-                return;
+                alert('Server Error: ' + text.substring(0, 200)); /
             }
 
             if (data.success) {

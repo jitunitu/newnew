@@ -9,18 +9,20 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 // 1. LOCALHOST (XAMPP) - Leave these empty to use SQLite automatically
 // 2. VERCEL (CLOUD) - Fill these details from Aiven/PlanetScale/CleverCloud
-$db_host = 'your-cloud-db-host.com'; 
+$db_host = 'mysql-32537cf1-jkmobileshop-e0c7.h.aivencloud.com'; 
 $db_name = 'defaultdb';
 $db_user = 'avnadmin';
-$db_pass = 'your-password';
-$db_port = '3306';
+$db_pass = 'AVNS_KFPO0dwxP1IHJEghIjK';
+$db_port = '14831';
 
 try {
     $pdo = null;
 
-    // Check if we are on Vercel or have Cloud Credentials
-    if ($db_host !== 'your-cloud-db-host.com' && !empty($db_host)) {
-        // Connect to Cloud MySQL
+    // Detect if running on Localhost (XAMPP)
+    $is_localhost = ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1');
+
+    // Use Cloud MySQL ONLY if NOT on localhost AND credentials exist
+    if (!$is_localhost && $db_host !== 'your-cloud-db-host.com' && !empty($db_host)) {
         $dsn = "mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4";
         $pdo = new PDO($dsn, $db_user, $db_pass);
     } else {
