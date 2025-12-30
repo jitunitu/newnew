@@ -139,7 +139,7 @@
                 data = JSON.parse(text);
             } catch (e) {
                 console.error("Server returned invalid JSON:", text);
-                alert('Server Error: ' + text.substring(0, 200)); /
+                alert('Server Error: ' + text.substring(0, 200));
             }
 
             if (data.success) {
