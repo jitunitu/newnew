@@ -10,8 +10,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
+// Disable HTML errors
+ini_set('display_errors', 0);
+
 session_start();
-include 'config.php';
+
+try {
+    if (!file_exists('config.php')) {
+        throw new Exception("config.php file not found");
+    }
+    include 'config.php';
+} catch (Exception $e) {
+    ob_clean();
+    echo json_encode(['success' => false, 'message' => 'Database Connection Error: ' . $e->getMessage()]);
+    exit;
+}
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
